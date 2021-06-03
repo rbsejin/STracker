@@ -1,9 +1,8 @@
-package com.example.stracker
+package com.example.stracker.login
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
+import com.example.stracker.R
 
 class FindPasswordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

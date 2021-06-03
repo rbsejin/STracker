@@ -4,9 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
@@ -14,6 +12,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.stracker.databinding.ActivityMainBinding
+import com.example.stracker.login.EXTRA_EMAIL
+import com.example.stracker.login.EXTRA_USER
+import com.example.stracker.login.LoginActivity
+import com.example.stracker.login.REQ_EXIT
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {

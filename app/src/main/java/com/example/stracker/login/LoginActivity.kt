@@ -1,19 +1,17 @@
-package com.example.stracker
+package com.example.stracker.login
 
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.*
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import android.widget.EditText
-import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.databinding.DataBindingUtil
+import com.example.stracker.MainActivity
+import com.example.stracker.R
+import com.example.stracker.ResponseDTO
+import com.example.stracker.STrackerApi
 import com.example.stracker.databinding.ActivityLoginBinding
 import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
@@ -30,7 +28,9 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding: ActivityLoginBinding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+        val binding: ActivityLoginBinding = DataBindingUtil.setContentView(this,
+            R.layout.activity_login
+        )
 
         binding.loginButton.setOnClickListener {
             val email: String = binding.emailEdit.text.toString()

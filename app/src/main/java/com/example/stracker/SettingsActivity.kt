@@ -7,6 +7,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
+import com.example.stracker.login.EXTRA_EMAIL
+import com.example.stracker.login.EXTRA_USER
+import com.example.stracker.login.LoginActivity
 import timber.log.Timber
 
 class SettingsActivity : AppCompatActivity() {

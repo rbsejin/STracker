@@ -1,15 +1,15 @@
-package com.example.stracker
+package com.example.stracker.login
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.VISIBLE
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
+import com.example.stracker.R
+import com.example.stracker.ResponseDTO
+import com.example.stracker.STrackerApi
 import com.example.stracker.databinding.FragmentEmailVerificationBinding
 import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
@@ -47,7 +47,11 @@ class EmailVerificationFragment : Fragment() {
                         Timber.i(result)
 
                         if (result.equals("이메일 전송 성공")) {
-                            view.findNavController().navigate(EmailVerificationFragmentDirections.actionEmailVerificationFragmentToAuthKeyVerificationFragment(email))
+                            view.findNavController().navigate(
+                                EmailVerificationFragmentDirections.actionEmailVerificationFragmentToAuthKeyVerificationFragment(
+                                    email
+                                )
+                            )
                         } else {
                             Snackbar.make(binding.root, result, Snackbar.LENGTH_SHORT).show()
                         }

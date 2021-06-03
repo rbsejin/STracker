@@ -17,13 +17,13 @@
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"></activity>
         <activity
-            android:name=".FindPasswordActivity"
+            android:name=".login.FindPasswordActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".SignUpActivity"
+            android:name=".login.SignUpActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".login.LoginActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".MainActivity"

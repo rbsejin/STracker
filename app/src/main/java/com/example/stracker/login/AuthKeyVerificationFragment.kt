@@ -1,13 +1,13 @@
-package com.example.stracker
+package com.example.stracker.login
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
+import com.example.stracker.*
 import com.example.stracker.databinding.FragmentAuthKeyVerificationBinding
 import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
@@ -50,7 +50,11 @@ class AuthKeyVerificationFragment : Fragment() {
                         val result = responseDTO?.result
 
                         if (result.equals("인증성공")) {
-                            findNavController().navigate(AuthKeyVerificationFragmentDirections.actionAuthKeyVerificationFragmentToPasswordResetFragment(email))
+                            findNavController().navigate(
+                                AuthKeyVerificationFragmentDirections.actionAuthKeyVerificationFragmentToPasswordResetFragment(
+                                    email
+                                )
+                            )
                         } else {
                             Snackbar.make(binding.root, getString(R.string.auth_key_mismatch_message), Snackbar.LENGTH_SHORT).show()
                             Timber.i(result)

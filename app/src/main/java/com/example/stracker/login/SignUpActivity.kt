@@ -1,4 +1,4 @@
-package com.example.stracker
+package com.example.stracker.login
 
 import android.content.Intent
 import android.content.SharedPreferences
@@ -11,7 +11,10 @@ import android.view.View
 import android.view.View.*
 import android.widget.*
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.DialogFragment
+import com.example.stracker.MainActivity
+import com.example.stracker.R
+import com.example.stracker.ResponseDTO
+import com.example.stracker.STrackerApi
 import com.example.stracker.databinding.ActivitySignUpBinding
 import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call

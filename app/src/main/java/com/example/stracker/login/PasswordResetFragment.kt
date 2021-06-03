@@ -1,18 +1,17 @@
-package com.example.stracker
+package com.example.stracker.login
 
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.example.stracker.databinding.FragmentEmailVerificationBinding
+import androidx.fragment.app.Fragment
+import com.example.stracker.R
+import com.example.stracker.ResponseDTO
+import com.example.stracker.STrackerApi
 import com.example.stracker.databinding.FragmentPasswordResetBinding
 import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
