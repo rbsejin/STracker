@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">STracker</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_timer">타이머</string>
+    <string name="title_calendar">캘린더</string>
+    <string name="title_reports">리포트</string>
 
-    <string name="setting">Setting</string>
+    <string name="settings">설정</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
     <!-- Preference Titles -->
@@ -505,4 +505,5 @@
     <string name="pravicy_policy_agree_message">개인정보 처리방침에 동의해 주세요</string>
     <string name="auth_key_resend_message">인증번호가 재전송 되었습니다.</string>
     <string name="empty_auth_key_message">인증번호를 입력해주세요.</string>
+    <string name="timer_start_or_stop">timer start or stop</string>
 </resources>

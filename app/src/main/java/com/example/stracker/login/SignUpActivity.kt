@@ -258,7 +258,7 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         binding.privacyPolicyButton.setOnClickListener {
-            val dialog = PravityPolicyDialogFragment()
+            val dialog = PrivacyPolicyDialogFragment()
             dialog.show(supportFragmentManager, "PrivacyPolicyDialogFragment")
         }
     }

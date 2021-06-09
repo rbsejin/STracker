@@ -164,7 +164,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/terms_of_service_check"
             app:layout_constraintTop_toTopOf="@+id/terms_of_service_check"
-            app:srcCompat="@drawable/ic_chevron_right_black_24dp" />
+            app:srcCompat="@drawable/ic_chevron_right" />
 
         <ImageButton
             android:id="@+id/privacy_policy_button"
@@ -177,7 +177,7 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/privacy_policy_check"
             app:layout_constraintTop_toTopOf="@+id/privacy_policy_check"
-            app:srcCompat="@drawable/ic_chevron_right_black_24dp" />
+            app:srcCompat="@drawable/ic_chevron_right" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

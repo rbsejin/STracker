@@ -23,7 +23,7 @@ class AuthKeyVerificationFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         val binding: FragmentAuthKeyVerificationBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_auth_key_verification, container, false)

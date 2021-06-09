@@ -23,11 +23,10 @@ import timber.log.Timber
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
 class PasswordResetFragment : Fragment() {
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding: FragmentPasswordResetBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_password_reset, container, false)
 
