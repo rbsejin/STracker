@@ -506,4 +506,6 @@
     <string name="auth_key_resend_message">인증번호가 재전송 되었습니다.</string>
     <string name="empty_auth_key_message">인증번호를 입력해주세요.</string>
     <string name="timer_start_or_stop">timer start or stop</string>
+    <string name="default_time">0:00:00</string>
+    <string name="task_content">작업 내용</string>
 </resources>
