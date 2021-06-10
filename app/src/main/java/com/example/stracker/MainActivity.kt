@@ -19,13 +19,14 @@ import com.example.stracker.login.REQ_EXIT
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
+    var email: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         val sharedPreferences: SharedPreferences = getSharedPreferences(EXTRA_USER, MODE_PRIVATE)
-        val email: String? = sharedPreferences.getString(EXTRA_EMAIL, "")
+        email = sharedPreferences.getString(EXTRA_EMAIL, "")
         Timber.i("email: $email")
 
         if (email.isNullOrEmpty()) {

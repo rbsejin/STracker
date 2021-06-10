@@ -41,32 +41,32 @@ class SignUpActivity : AppCompatActivity() {
 
             if (!isAuthenticated) {
                 Snackbar.make(binding.root, getString(R.string.email_auth_confirm_message), Snackbar.LENGTH_SHORT).show()
-                return@setOnClickListener;
+                return@setOnClickListener
             }
 
             if (password.isEmpty()) {
                 Snackbar.make(binding.root, getString(R.string.password_empty_message), Snackbar.LENGTH_SHORT).show()
-                return@setOnClickListener;
+                return@setOnClickListener
             }
 
             if (password.length < 10) {
                 Snackbar.make(binding.root, getString(R.string.password_length_message), Snackbar.LENGTH_SHORT).show()
-                return@setOnClickListener;
+                return@setOnClickListener
             }
 
-            if (!password.equals(passwordConfirm)) {
+            if (password != passwordConfirm) {
                 Snackbar.make(binding.root, getString(R.string.password_mismatch_message), Snackbar.LENGTH_SHORT).show()
-                return@setOnClickListener;
+                return@setOnClickListener
             }
 
             if (!checkBox1.isChecked) {
                 Snackbar.make(binding.root, getString(R.string.terms_of_service_agree_message), Snackbar.LENGTH_SHORT).show()
-                return@setOnClickListener;
+                return@setOnClickListener
             }
 
             if (!checkBox2.isChecked) {
                 Snackbar.make(binding.root, getString(R.string.pravicy_policy_agree_message), Snackbar.LENGTH_SHORT).show()
-                return@setOnClickListener;
+                return@setOnClickListener
             }
 
             Timber.i("email: $email password: $password")
@@ -85,7 +85,7 @@ class SignUpActivity : AppCompatActivity() {
                                 getSharedPreferences(EXTRA_USER, MODE_PRIVATE)
                             val editor: SharedPreferences.Editor = sharedPreferences.edit()
                             editor.putString(EXTRA_EMAIL, email)
-                            editor.commit()
+                            editor.apply()
 
                             val intent = Intent(this@SignUpActivity, MainActivity::class.java)
                             setResult(RESULT_OK, intent)

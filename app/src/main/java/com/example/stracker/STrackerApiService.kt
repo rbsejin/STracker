@@ -28,7 +28,10 @@ interface STrackerApiService {
 
     @FormUrlEncoded
     @POST("sign_up.php")
-    fun signUp(@Field("email") email: String, @Field("password") password: String): Call<ResponseDTO>
+    fun signUp(
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): Call<ResponseDTO>
 
     @FormUrlEncoded
     @POST("email_confirm.php")
@@ -36,7 +39,10 @@ interface STrackerApiService {
 
     @FormUrlEncoded
     @POST("email_authentication.php")
-    fun emailConfirmAuthentication(@Field("email") email: String, @Field("resend") resend: Boolean = false): Call<ResponseDTO>
+    fun emailConfirmAuthentication(
+        @Field("email") email: String,
+        @Field("resend") resend: Boolean = false
+    ): Call<ResponseDTO>
 
     @FormUrlEncoded
     @POST("auth_key_confirm.php")
@@ -44,7 +50,42 @@ interface STrackerApiService {
 
     @FormUrlEncoded
     @POST("password_change.php")
-    fun changePassword(@Field("email") email: String, @Field("password") password: String): Call<ResponseDTO>
+    fun changePassword(
+        @Field("email") email: String,
+        @Field("password") password: String
+    ): Call<ResponseDTO>
+
+    @FormUrlEncoded
+    @POST("beginTask.php")
+    fun beginTask(
+        @Field("email") email: String,
+        @Field("task_content") taskContent: String,
+        @Field("start_datetime") startDateTime: String
+    ): Call<ResponseDTO>
+
+    @FormUrlEncoded
+    @POST("finishTask.php")
+    fun finishTask(
+        @Field("email") email: String,
+        @Field("task_content") taskContent: String,
+        @Field("start_datetime") startDateTime: String,
+        @Field("end_datetime") endDateTime: String
+    ): Call<ResponseDTO>
+
+    @FormUrlEncoded
+    @POST("updateTask.php")
+    fun updateTask(
+        @Field("email") email: String,
+        @Field("task_content") taskContent: String
+    ): Call<ResponseDTO>
+
+    @FormUrlEncoded
+    @POST("getTasks.php")
+    fun getTasks(@Field("email") email: String): Call<List<TaskDTO>>
+
+    @FormUrlEncoded
+    @POST("getTaskTimes.php")
+    fun getTaskTimes(@Field("email") email: String): Call<List<TaskTimeDTO>>
 }
 
 object STrackerApi {
