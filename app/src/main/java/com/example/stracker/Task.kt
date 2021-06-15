@@ -1,17 +1,30 @@
 package com.example.stracker
 
-class Task(val id: Long, val project: Project?, val content: String) {
-    private val taskTimeMap = mutableMapOf<Long, TaskTime>()
+import java.util.*
 
-    fun put(id: Long, taskTime: TaskTime) {
-        taskTimeMap[id] = taskTime
+class Task(val id: Long, val project: Project?, val content: String, val created: Date) {
+    private val taskTimes = mutableListOf<TaskTime>()
+
+    fun getTaskTimes(): MutableList<TaskTime> {
+        return taskTimes
     }
 
-    fun contains(id: Long): Boolean {
-        return taskTimeMap.contains(id)
+    fun getTime(): Long {
+        var time = 0L
+
+        for (taskTime in taskTimes) {
+            time += taskTime.getTime()
+        }
+
+        return time
     }
 
-    fun getChildCount(): Int {
-        return taskTimeMap.size
+    fun getTimeString(): String {
+        val time = getTime()
+
+        val hour = time / 3600
+        val min = (time % 3600) / 60
+        val second = time % 60
+        return String.format("%d:%02d:%02d", hour, min, second)
     }
 }

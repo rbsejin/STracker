@@ -50,86 +50,148 @@ class TimerFragment : Fragment() {
 
         binding.timerButton.setOnClickListener {
             // 타이머 상태 판단
-//            if (startDateTime != null) {
-//                // 타이머를 중단한다.
-//                binding.timerButton.setImageResource(R.drawable.ic_start)
-//
-//                // 서버에 작업 중단 알림
-//                val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-//                val startDateTimeString = simpleDateFormat.format(this.startDateTime!!)
-//                val endDateTimeString = simpleDateFormat.format(Calendar.getInstance().time)
-//
-//                val message = STrackerApi.retrofitService.finishTask(
-//                    email,
-//                    binding.taskContentEdit.text.toString(),
-//                    startDateTimeString,
-//                    endDateTimeString
-//                )
-//                message.enqueue(object : Callback<ResponseDTO> {
-//                    override fun onResponse(call: Call<ResponseDTO>, response: Response<ResponseDTO>) {
-//                        if (response.isSuccessful) {
-//                            Timber.i("Response: ${response.body()?.toString()}")
-//
-//                            val responseDTO: ResponseDTO? = response.body()
-//                            val result = responseDTO?.result
-//
-//                            Timber.i("Success: $result")
-//                        } else {
-//                            Timber.i("Failure: ${response.body()?.toString()}")
-//                        }
-//                    }
-//
-//                    override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
-//                        Snackbar.make(
-//                            binding.root,
-//                            getString(R.string.server_connection_error_message),
-//                            Snackbar.LENGTH_SHORT
-//                        ).show()
-//                        Timber.i("Failure: ${t.message}")
-//                    }
-//                })
-//
-//                stopTimerTask()
-//            } else {
-//                // 타이머를 실행한다.
-//                binding.timerButton.setImageResource(R.drawable.ic_stop)
-//                startTimerTask()
-//
-//                // 서버에 작업 시작 알림
-//                val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-//                val startDateTimeString = simpleDateFormat.format(Calendar.getInstance().time)
-//
-//                val message = STrackerApi.retrofitService.beginTask(
-//                    email,
-//                    binding.taskContentEdit.text.toString(),
-//                    startDateTimeString
-//                )
-//                message.enqueue(object : Callback<ResponseDTO> {
-//                    override fun onResponse(call: Call<ResponseDTO>, response: Response<ResponseDTO>) {
-//                        if (response.isSuccessful) {
-//                            Timber.i("Response: ${response.body()?.toString()}")
-//
-//                            val responseDTO: ResponseDTO? = response.body()
-//                            val result = responseDTO?.result
-//
-//                            Timber.i("Success: $result")
-//                        } else {
-//                            Timber.i("Failure: ${response.body()?.toString()}")
-//                        }
-//                    }
-//
-//                    override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
-//                        Snackbar.make(
-//                            binding.root,
-//                            getString(R.string.server_connection_error_message),
-//                            Snackbar.LENGTH_SHORT
-//                        ).show()
-//                        Timber.i("Failure: ${t.message}")
-//                    }
-//                })
-//            }
-//
-//            saveTime()
+            if (startDateTime != null) {
+                // 타이머를 중단한다.
+                binding.timerButton.setImageResource(R.drawable.ic_start)
+
+                // 서버에 작업 중단 알림
+                val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                val startDateTimeString = simpleDateFormat.format(this.startDateTime!!)
+                val endDateTimeString = simpleDateFormat.format(Calendar.getInstance().time)
+
+                val message = STrackerApi.retrofitService.finishTask(
+                    email,
+                    binding.taskContentEdit.text.toString(),
+                    startDateTimeString,
+                    endDateTimeString
+                )
+                message.enqueue(object : Callback<ResponseDTO> {
+                    override fun onResponse(call: Call<ResponseDTO>, response: Response<ResponseDTO>) {
+                        if (response.isSuccessful) {
+                            Timber.i("Response: ${response.body()?.toString()}")
+
+                            val responseDTO: ResponseDTO? = response.body()
+                            val result = responseDTO?.result
+
+                            Timber.i("Success: $result")
+
+                            taskDTOs = null
+                            taskTimeDTOs = null
+
+                            // 작업 리스트를 가져온다.
+                            STrackerApi.retrofitService.getTasks(email)
+                                .enqueue(object : Callback<List<TaskDTO>> {
+                                    override fun onResponse(
+                                        call: Call<List<TaskDTO>>,
+                                        response: Response<List<TaskDTO>>
+                                    ) {
+                                        if (response.isSuccessful) {
+                                            Timber.i("Response: ${response.body()?.toString()}")
+                                            Timber.i(taskDTOs.toString())
+
+                                            taskDTOs = response.body()
+                                            if (taskTimeDTOs != null) {
+                                                TaskManager.load(taskDTOs!!, taskTimeDTOs!!)
+
+                                                // 리사이클러뷰
+                                                val taskAdapter = binding.recyclerView.adapter as TaskAdapter
+                                                taskAdapter.updateItems(TaskManager.getTasks())
+                                                taskAdapter.notifyDataSetChanged()
+                                            }
+                                        } else {
+                                            Timber.i("Failure: ${response.body()?.toString()}")
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<List<TaskDTO>>, t: Throwable) {
+                                        Timber.i("Failure: ${t.message}")
+                                    }
+                                })
+
+                            STrackerApi.retrofitService.getTaskTimes(email)
+                                .enqueue(object : Callback<List<TaskTimeDTO>> {
+                                    override fun onResponse(
+                                        call: Call<List<TaskTimeDTO>>,
+                                        response: Response<List<TaskTimeDTO>>
+                                    ) {
+                                        if (response.isSuccessful) {
+                                            Timber.i("Response: ${response.body()?.toString()}")
+                                            Timber.i(taskTimeDTOs.toString())
+
+                                            taskTimeDTOs = response.body()
+                                            if (taskDTOs != null) {
+                                                TaskManager.load(taskDTOs!!, taskTimeDTOs!!)
+
+                                                // 리사이클러뷰
+                                                val taskAdapter = binding.recyclerView.adapter as TaskAdapter
+                                                taskAdapter.updateItems(TaskManager.getTasks())
+                                                taskAdapter.notifyDataSetChanged()
+                                            }
+                                        } else {
+                                            Timber.i("Failure: ${response.body()?.toString()}")
+                                        }
+                                    }
+
+                                    override fun onFailure(call: Call<List<TaskTimeDTO>>, t: Throwable) {
+                                        Timber.i("Failure: ${t.message}")
+                                    }
+                                })
+                        } else {
+                            Timber.i("Failure: ${response.body()?.toString()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
+                        Snackbar.make(
+                            binding.root,
+                            getString(R.string.server_connection_error_message),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                        Timber.i("Failure: ${t.message}")
+                    }
+                })
+
+                stopTimerTask()
+            } else {
+                // 타이머를 실행한다.
+                binding.timerButton.setImageResource(R.drawable.ic_stop)
+                startTimerTask()
+
+                // 서버에 작업 시작 알림
+                val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+                val startDateTimeString = simpleDateFormat.format(Calendar.getInstance().time)
+
+                val message = STrackerApi.retrofitService.beginTask(
+                    email,
+                    binding.taskContentEdit.text.toString(),
+                    startDateTimeString
+                )
+                message.enqueue(object : Callback<ResponseDTO> {
+                    override fun onResponse(call: Call<ResponseDTO>, response: Response<ResponseDTO>) {
+                        if (response.isSuccessful) {
+                            Timber.i("Response: ${response.body()?.toString()}")
+
+                            val responseDTO: ResponseDTO? = response.body()
+                            val result = responseDTO?.result
+
+                            Timber.i("Success: $result")
+                        } else {
+                            Timber.i("Failure: ${response.body()?.toString()}")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
+                        Snackbar.make(
+                            binding.root,
+                            getString(R.string.server_connection_error_message),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                        Timber.i("Failure: ${t.message}")
+                    }
+                })
+            }
+
+            saveTime()
         }
 
         email = (activity as MainActivity).email!!
@@ -157,6 +219,9 @@ class TimerFragment : Fragment() {
                             TaskManager.load(taskDTOs!!, taskTimeDTOs!!)
                             taskDTOs = null
                             taskTimeDTOs = null
+
+                            // 리사이클러뷰
+                            binding.recyclerView.adapter = TaskAdapter(TaskManager.getTasks())
                         }
                     } else {
                         Timber.i("Failure: ${response.body()?.toString()}")
@@ -183,6 +248,9 @@ class TimerFragment : Fragment() {
                             TaskManager.load(taskDTOs!!, taskTimeDTOs!!)
                             taskDTOs = null
                             taskTimeDTOs = null
+
+                            // 리사이클러뷰
+                            binding.recyclerView.adapter = TaskAdapter(TaskManager.getTasks())
                         }
                     } else {
                         Timber.i("Failure: ${response.body()?.toString()}")

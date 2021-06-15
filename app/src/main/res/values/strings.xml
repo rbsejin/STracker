@@ -508,4 +508,5 @@
     <string name="timer_start_or_stop">timer start or stop</string>
     <string name="default_time">0:00:00</string>
     <string name="task_content">작업 내용</string>
+    <string name="add_description">제목 없음</string>
 </resources>

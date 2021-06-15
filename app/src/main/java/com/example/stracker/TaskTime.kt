@@ -6,14 +6,18 @@ class TaskTime(
     val id: Long,
     val startDateTime: Date,
     val endDateTime: Date?,
-    private val task: Task
+    val task: Task
 ) {
     fun getContent(): String {
         return task.content
     }
 
-    fun getTime(): String {
-        val time = (endDateTime!!.time - startDateTime.time) / 1000
+    fun getTime(): Long {
+        return (endDateTime!!.time - startDateTime.time) / 1000
+    }
+
+    fun getTimeString(): String {
+        val time = getTime()
         val hour = time / 3600
         val min = (time % 3600) / 60
         val second = time % 60
