@@ -5,7 +5,7 @@
  * Licensed under the BSD 2-Clause License (the "License").  See License in the project root for
  * license information.
  */
-package com.example.calendarapplication;
+package com.example.stracker.ui.calendar;
 
 import android.content.Context;
 import android.content.res.TypedArray;
