@@ -65,7 +65,7 @@ class SignUpActivity : AppCompatActivity() {
             }
 
             if (!checkBox2.isChecked) {
-                Snackbar.make(binding.root, getString(R.string.pravicy_policy_agree_message), Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(binding.root, getString(R.string.privacy_policy_agree_message), Snackbar.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 

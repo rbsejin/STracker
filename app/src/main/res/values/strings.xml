@@ -502,7 +502,7 @@
     <string name="password_empty_message">비밀번호를 입력해주세요.</string>
     <string name="password_mismatch_message">동일한 비밀번호를 입력해주세요.</string>
     <string name="terms_of_service_agree_message">이용약관에 동의해 주세요</string>
-    <string name="pravicy_policy_agree_message">개인정보 처리방침에 동의해 주세요</string>
+    <string name="privacy_policy_agree_message">개인정보 처리방침에 동의해 주세요</string>
     <string name="auth_key_resend_message">인증번호가 재전송 되었습니다.</string>
     <string name="empty_auth_key_message">인증번호를 입력해주세요.</string>
     <string name="timer_start_or_stop">timer start or stop</string>
