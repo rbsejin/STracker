@@ -56,7 +56,7 @@ class CalendarViewModel : ViewModel() {
             }
 
             val events: MutableList<Event> = _allEvents.value!![timeInMillis]!!
-            val title = if (taskTime.getContent().isEmpty()) "제목없음" else taskTime.getContent()
+            val title = taskTime.getContent()
             Timber.i(taskTime.startDateTime.toString())
             Timber.i("$title : $hour")
             events.add(Event(title, "", hour, minute, taskTime.getTime().toInt() / 60, android.R.color.holo_red_dark, taskTime))

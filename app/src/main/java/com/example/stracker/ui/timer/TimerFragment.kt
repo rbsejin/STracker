@@ -166,21 +166,16 @@ class TimerFragment : Fragment() {
                     binding.taskContentEdit.text.toString(),
                     startDateTimeString
                 )
-                message.enqueue(object : Callback<ResponseDTO> {
-                    override fun onResponse(call: Call<ResponseDTO>, response: Response<ResponseDTO>) {
+                message.enqueue(object : Callback<TaskTimeDTO> {
+                    override fun onResponse(call: Call<TaskTimeDTO>, response: Response<TaskTimeDTO>) {
                         if (response.isSuccessful) {
                             Timber.i("Response: ${response.body()?.toString()}")
-
-                            val responseDTO: ResponseDTO? = response.body()
-                            val result = responseDTO?.result
-
-                            Timber.i("Success: $result")
                         } else {
                             Timber.i("Failure: ${response.body()?.toString()}")
                         }
                     }
 
-                    override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
+                    override fun onFailure(call: Call<TaskTimeDTO>, t: Throwable) {
                         Snackbar.make(
                             binding.root,
                             getString(R.string.server_connection_error_message),

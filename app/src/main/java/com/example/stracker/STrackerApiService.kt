@@ -60,8 +60,9 @@ interface STrackerApiService {
     fun beginTask(
         @Field("email") email: String,
         @Field("task_content") taskContent: String,
-        @Field("start_datetime") startDateTime: String
-    ): Call<ResponseDTO>
+        @Field("start_datetime") startDateTime: String,
+        @Field("end_datetime") endDateTime: String = ""
+    ): Call<TaskTimeDTO>
 
     @FormUrlEncoded
     @POST("finishTask.php")
@@ -73,10 +74,20 @@ interface STrackerApiService {
     ): Call<ResponseDTO>
 
     @FormUrlEncoded
-    @POST("updateTask.php")
-    fun updateTask(
+    @POST("update_task_time.php")
+    fun updateTaskTime(
         @Field("email") email: String,
-        @Field("task_content") taskContent: String
+        @Field("task_time_id") taskTimeId: Long,
+        @Field("task_content") taskContent: String,
+        @Field("start_datetime") startDateTime: String,
+        @Field("end_datetime") endDateTime: String
+    ): Call<ResponseDTO>
+
+    @FormUrlEncoded
+    @POST("delete_task_time.php")
+    fun deleteTaskTime(
+        @Field("email") email: String,
+        @Field("task_time_id") taskTimeId: Long,
     ): Call<ResponseDTO>
 
     @FormUrlEncoded

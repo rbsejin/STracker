@@ -17,12 +17,18 @@ import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.stracker.R
-import com.example.stracker.TaskTime
+import com.example.stracker.*
 import com.example.stracker.databinding.FragmentCalendarBinding
 import com.example.stracker.ui.calendar.DayView.EventTimeRange
+import com.google.android.material.snackbar.Snackbar
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import timber.log.Timber
 import java.text.DateFormat
+import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.min
 
 
 class CalendarFragment : Fragment() {
@@ -46,6 +52,8 @@ class CalendarFragment : Fragment() {
     private var currentMonth = 0
     private var currentDay = 0
 
+    private lateinit var email: String
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?, savedInstanceState: Bundle?
@@ -56,6 +64,8 @@ class CalendarFragment : Fragment() {
         binding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_calendar, container, false
         )
+
+        email = (activity as MainActivity).email!!
 
         content = binding.sampleContent
         dateTextView = binding.sampleDate
@@ -102,7 +112,13 @@ class CalendarFragment : Fragment() {
             hourLabelViews.add(hourLabelView)
         }
         dayView.setHourLabelViews(hourLabelViews)
+
+        binding.weekCalendar.reset()
         onDayChange()
+
+//        calendarViewModel.allEvents.observe(viewLifecycleOwner, {
+//            onEventsChange()
+//        })
 
         // region Button ClickListener
         binding.previousButton.setOnClickListener {
@@ -135,10 +151,6 @@ class CalendarFragment : Fragment() {
             day.set(Calendar.DAY_OF_MONTH, dateTime.dayOfMonth)
             onDayChange()
         }
-
-        calendarViewModel.allEvents.observe(viewLifecycleOwner, {
-            onEventsChange()
-        })
 
         scrollView.post {
             run {
@@ -354,6 +366,7 @@ class CalendarFragment : Fragment() {
         builder.setPositiveButton(
             android.R.string.ok
         ) { dialog, which ->
+
             val title = titleTextView.text.toString()
             val location = locationTextView.text.toString()
             val hour = editEventStartTime[Calendar.HOUR_OF_DAY]
@@ -379,20 +392,105 @@ class CalendarFragment : Fragment() {
                 }
             }
 
-            // region 임시
-            val taskTime = editEventDraft!!.taskTime!!
-            taskTime.task.content = title
+            val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+
+            val calendar: Calendar = editEventDate.clone() as Calendar
+
+            calendar[Calendar.HOUR_OF_DAY] = hour
+            calendar[Calendar.MINUTE] = minute
+
+            val startDateTimeString = simpleDateFormat.format(calendar.time)
+
+            calendar.add(Calendar.MINUTE, duration)
+            val endDateTimeString = simpleDateFormat.format(calendar.time)
+
+            if (editEventDraft != null) {
+                // 수정
+                val taskTime: TaskTime
+                taskTime = editEventDraft!!.taskTime!!
+                taskTime.task.content = title
 //            taskTime.task.project = null
-            taskTime.startDateTime = editEventStartTime.time
-            taskTime.endDateTime = editEventStartTime.time
+                taskTime.startDateTime = editEventStartTime.time
+                taskTime.endDateTime = editEventEndTime.time
 
+                val message = STrackerApi.retrofitService.updateTaskTime(
+                    email,
+                    editEventDraft!!.taskTime!!.id,
+                    taskTime.task.content,
+                    startDateTimeString,
+                    endDateTimeString
+                )
+                message.enqueue(object : Callback<ResponseDTO> {
+                    override fun onResponse(
+                        call: Call<ResponseDTO>,
+                        response: Response<ResponseDTO>
+                    ) {
+                        if (response.isSuccessful) {
+                            val responseDTO: ResponseDTO? = response.body()
+                            val result = responseDTO?.result
+                            Timber.i(result)
 
-            // endregion
+                            calendarViewModel.add(
+                                editEventDate.timeInMillis,
+                                Event(title, location, hour, minute, duration, color, taskTime)
+                            )
+                        } else {
+                            Timber.i("updateTaskTime 실패")
+                        }
+                    }
 
-            calendarViewModel.add(
-                editEventDate.timeInMillis,
-                Event(title, location, hour, minute, duration, color, taskTime)
-            )
+                    override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
+                        Snackbar.make(
+                            binding.root,
+                            getString(R.string.server_connection_error_message),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                        Timber.i("Failure: ${t.message}")
+                    }
+                })
+            } else {
+                // 추가
+                val message = STrackerApi.retrofitService.beginTask(
+                    email,
+                    title,
+                    startDateTimeString,
+                    endDateTimeString
+                )
+                message.enqueue(object : Callback<TaskTimeDTO> {
+                    override fun onResponse(
+                        call: Call<TaskTimeDTO>,
+                        response: Response<TaskTimeDTO>
+                    ) {
+                        if (response.isSuccessful) {
+                            Timber.i("Response: ${response.body()?.toString()}")
+                        } else {
+                            Timber.i("Failure: ${response.body()?.toString()}")
+                        }
+
+                        val taskTimeDTO: TaskTimeDTO = response.body()!!
+                        val taskTime = TaskTime(taskTimeDTO.id, editEventStartTime.time,
+                            editEventEndTime.time, Task(taskTimeDTO.taskId, null, title, editEventStartTime.time)
+                        )
+
+                        calendarViewModel.add(
+                            editEventDate.timeInMillis,
+                            Event(title, location, hour, minute, duration, color, taskTime)
+                        )
+
+                        onEventsChange()
+                    }
+
+                    override fun onFailure(call: Call<TaskTimeDTO>, t: Throwable) {
+                        Snackbar.make(
+                            binding.root,
+                            getString(R.string.server_connection_error_message),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                        Timber.i("Failure: ${t.message}")
+                    }
+                })
+            }
+
             onEditEventDismiss(true)
         }
         builder.setNegativeButton(
@@ -403,7 +501,35 @@ class CalendarFragment : Fragment() {
         if (eventExists) {
             builder.setNeutralButton(
                 R.string.edit_event_delete
-            ) { dialog, which -> onEditEventDismiss(true) }
+            ) { dialog, which ->
+                val message = STrackerApi.retrofitService.deleteTaskTime(
+                    email,
+                    editEventDraft!!.taskTime!!.id
+                )
+                message.enqueue(object : Callback<ResponseDTO> {
+                    override fun onResponse(
+                        call: Call<ResponseDTO>,
+                        response: Response<ResponseDTO>
+                    ) {
+                        if (response.isSuccessful) {
+                            val responseDTO: ResponseDTO? = response.body()
+                            val result = responseDTO?.result
+                            Timber.i("Success: $result")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<ResponseDTO>, t: Throwable) {
+                        Snackbar.make(
+                            binding.root,
+                            getString(R.string.server_connection_error_message),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
+                        Timber.i("Failure: ${t.message}")
+                    }
+                })
+
+                onEditEventDismiss(true)
+            }
         }
         builder.setOnCancelListener { onEditEventDismiss(false) }
         builder.setView(view)
