@@ -434,6 +434,8 @@ class CalendarFragment : Fragment() {
                                 editEventDate.timeInMillis,
                                 Event(title, location, hour, minute, duration, color, taskTime)
                             )
+
+                            onEventsChange()
                         } else {
                             Timber.i("updateTaskTime 실패")
                         }
