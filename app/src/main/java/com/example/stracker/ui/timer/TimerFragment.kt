@@ -95,7 +95,7 @@ class TimerFragment : Fragment() {
 
                                                 // 리사이클러뷰
                                                 val taskAdapter = binding.recyclerView.adapter as TaskAdapter
-                                                taskAdapter.updateItems(TaskManager.getTasks())
+                                                taskAdapter.updateItems(TaskManager.tasks)
                                                 taskAdapter.notifyDataSetChanged()
                                             }
                                         } else {
@@ -124,7 +124,7 @@ class TimerFragment : Fragment() {
 
                                                 // 리사이클러뷰
                                                 val taskAdapter = binding.recyclerView.adapter as TaskAdapter
-                                                taskAdapter.updateItems(TaskManager.getTasks())
+                                                taskAdapter.updateItems(TaskManager.tasks)
                                                 taskAdapter.notifyDataSetChanged()
                                             }
                                         } else {
@@ -221,7 +221,7 @@ class TimerFragment : Fragment() {
                             taskTimeDTOs = null
 
                             // 리사이클러뷰
-                            binding.recyclerView.adapter = TaskAdapter(TaskManager.getTasks())
+                            binding.recyclerView.adapter = TaskAdapter(TaskManager.tasks)
                         }
                     } else {
                         Timber.i("Failure: ${response.body()?.toString()}")
@@ -250,7 +250,7 @@ class TimerFragment : Fragment() {
                             taskTimeDTOs = null
 
                             // 리사이클러뷰
-                            binding.recyclerView.adapter = TaskAdapter(TaskManager.getTasks())
+                            binding.recyclerView.adapter = TaskAdapter(TaskManager.tasks)
                         }
                     } else {
                         Timber.i("Failure: ${response.body()?.toString()}")

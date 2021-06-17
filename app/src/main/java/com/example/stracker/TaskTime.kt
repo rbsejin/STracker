@@ -4,8 +4,8 @@ import java.util.*
 
 class TaskTime(
     val id: Long,
-    val startDateTime: Date,
-    val endDateTime: Date?,
+    var startDateTime: Date,
+    var endDateTime: Date?,
     val task: Task
 ) {
     fun getContent(): String {

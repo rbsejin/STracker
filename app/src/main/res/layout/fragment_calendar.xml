@@ -1,22 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.calendar.CalendarFragment">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/text_dashboard"
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        tools:context=".ui.calendar.CalendarViewModel">
+
+        <LinearLayout
+            android:id="@+id/sample_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/sample_date"
+                style="@style/Base.TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/layout_margin"
+                android:layout_marginBottom="@dimen/layout_margin"
+                android:ellipsize="end"
+                android:paddingLeft="@dimen/small_padding"
+                android:paddingTop="@dimen/large_padding"
+                android:paddingRight="@dimen/small_padding"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                tools:text="2021.6.17" />
+
+            <noman.weekcalendar.WeekCalendar
+                android:id="@+id/weekCalendar"
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                app:dayNameLength="threeLetters"
+                app:numOfPages="150"
+                app:daysBackgroundColor="@android:color/transparent"
+                app:weekTextColor="@color/black"
+                app:weekBackgroundColor="@android:color/transparent"
+                app:daysTextColor="@color/black"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/medium_padding"
+                android:paddingTop="@dimen/large_padding"
+                android:paddingRight="@dimen/medium_padding"
+                android:paddingBottom="@dimen/large_padding"
+                android:visibility="visible">
+
+                <Button
+                    android:id="@+id/previous_button"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/previous_day"
+                    tools:ignore="SpUsage" />
+
+                <Button
+                    android:id="@+id/add_button"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:text="@string/add_event"
+                    tools:ignore="SpUsage" />
+
+                <Button
+                    android:id="@+id/next_button"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/next_day"
+                    tools:ignore="SpUsage" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/scroll_button"
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/medium_padding"
+                android:layout_marginRight="@dimen/medium_padding"
+                android:text="@string/scroll_to"
+                android:visibility="visible"
+                tools:ignore="SpUsage" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/divider_height"
+                android:background="@color/hour_divider" />
+
+            <ScrollView
+                android:id="@+id/sample_scroll"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                tools:context=".SampleActivity">
+
+                <com.example.stracker.ui.calendar.DayView
+                    android:id="@+id/sample_day"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/large_padding"
+                    app:dividerHeight="@dimen/divider_height"
+                    app:endHour="@integer/end_hour"
+                    app:eventMargin="@dimen/small_padding"
+                    app:halfHourDividerColor="@color/half_hour_divider"
+                    app:halfHourHeight="@dimen/half_hour_height"
+                    app:hourDividerColor="@color/hour_divider"
+                    app:hourLabelMarginEnd="@dimen/large_padding"
+                    app:hourLabelWidth="@dimen/hour_label_width"
+                    app:startHour="@integer/start_hour" />
+            </ScrollView>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

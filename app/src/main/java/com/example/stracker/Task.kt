@@ -2,7 +2,7 @@ package com.example.stracker
 
 import java.util.*
 
-class Task(val id: Long, val project: Project?, val content: String, val created: Date) {
+class Task(val id: Long, var project: Project?, var content: String, val created: Date) {
     private val taskTimes = mutableListOf<TaskTime>()
 
     fun getTaskTimes(): MutableList<TaskTime> {
