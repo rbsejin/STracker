@@ -42,7 +42,7 @@ public class DayView extends ViewGroup {
     static final int MAX_END_HOUR = 24;
 
     private static final int MINUTES_PER_HOUR = 60;
-    private static final int MIN_DURATION_MINUTES = 15;
+    private static final int MIN_DURATION_MINUTES = 5;
 
     @NonNull
     @VisibleForTesting

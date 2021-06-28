@@ -43,6 +43,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         tools:text="0:00:00" />
 
 </LinearLayout>

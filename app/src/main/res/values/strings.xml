@@ -511,11 +511,11 @@
     <string name="add_description">제목 없음</string>
 
     <!-- calendar   -->
-    <string name="previous_day">Previous Day</string>
-    <string name="next_day">Next Day</string>
-    <string name="add_event">Add Event</string>
-    <string name="edit_event">Edit Event</string>
-    <string name="scroll_to">Scroll To…</string>
+    <string name="previous_day">이전</string>
+    <string name="next_day">다음</string>
+    <string name="add_event">추가</string>
+    <string name="edit_event">수정</string>
+    <string name="scroll_to">스크롤</string>
     <string name="edit_event_title">작업내용</string>
     <string name="edit_event_project">프로젝트</string>
     <string name="edit_event_date">날짜</string>

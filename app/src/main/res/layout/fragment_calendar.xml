@@ -67,6 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="@string/previous_day"
+                    android:visibility="gone"
                     tools:ignore="SpUsage" />
 
                 <Button
@@ -86,6 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:text="@string/next_day"
+                    android:visibility="gone"
                     tools:ignore="SpUsage" />
             </LinearLayout>
 
@@ -97,7 +99,7 @@
                 android:layout_marginLeft="@dimen/medium_padding"
                 android:layout_marginRight="@dimen/medium_padding"
                 android:text="@string/scroll_to"
-                android:visibility="visible"
+                android:visibility="gone"
                 tools:ignore="SpUsage" />
 
             <View

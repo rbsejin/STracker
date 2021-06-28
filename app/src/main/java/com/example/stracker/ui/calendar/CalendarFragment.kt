@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.DatePickerDialog.OnDateSetListener
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,7 +29,6 @@ import timber.log.Timber
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.min
 
 
 class CalendarFragment : Fragment() {
@@ -47,10 +47,6 @@ class CalendarFragment : Fragment() {
     private lateinit var dateTextView: TextView
     private lateinit var scrollView: ScrollView
     private lateinit var dayView: DayView
-
-    private val calendar = Calendar.getInstance()
-    private var currentMonth = 0
-    private var currentDay = 0
 
     private lateinit var email: String
 
@@ -594,13 +590,14 @@ class CalendarFragment : Fragment() {
     }
 
     private fun scrollToCurrentTime() {
-//        val hourOfDay = calendar[Calendar.HOUR_OF_DAY]
-//        val minute = calendar[Calendar.MINUTE]
-        val hourOfDay = 9
-        val minute = 0
+        val calendar = Calendar.getInstance()
+        val hourOfDay = calendar[Calendar.HOUR_OF_DAY]
+        val minute = calendar[Calendar.MINUTE]
+//        val hourOfDay = 9
+//        val minute = 0
         val top = dayView.getHourTop(hourOfDay)
         val bottom = dayView.getHourBottom(hourOfDay)
         val y = top + (bottom - top) * minute / 60 - 50
-        scrollView.smoothScrollTo(0, y)
+        scrollView.scrollTo(0, y)
     }
 }

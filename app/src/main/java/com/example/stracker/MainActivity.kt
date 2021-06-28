@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ReportFragment
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -16,6 +17,7 @@ import com.example.stracker.login.EXTRA_EMAIL
 import com.example.stracker.login.EXTRA_USER
 import com.example.stracker.login.LoginActivity
 import com.example.stracker.login.REQ_EXIT
+import com.example.stracker.ui.reports.CalendarDialogFragment
 import timber.log.Timber
 
 class MainActivity : AppCompatActivity() {
